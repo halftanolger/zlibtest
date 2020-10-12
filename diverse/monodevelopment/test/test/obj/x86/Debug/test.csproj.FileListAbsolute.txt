@@ -1,0 +1,12 @@
+/home/sensor/Projects/test/test/bin/Debug/test.exe
+/home/sensor/Projects/test/test/bin/Debug/test.pdb
+/home/sensor/Projects/test/test/obj/x86/Debug/test.csprojAssemblyReference.cache
+/home/sensor/Projects/test/test/obj/x86/Debug/test.csproj.CoreCompileInputs.cache
+/home/sensor/Projects/test/test/obj/x86/Debug/test.exe
+/home/sensor/Projects/test/test/obj/x86/Debug/test.pdb
+/home/sensor/src/myzlibtest/zlibtest/diverse/monodevelopment/test/test/bin/Debug/test.exe
+/home/sensor/src/myzlibtest/zlibtest/diverse/monodevelopment/test/test/bin/Debug/test.pdb
+/home/sensor/src/myzlibtest/zlibtest/diverse/monodevelopment/test/test/obj/x86/Debug/test.csprojAssemblyReference.cache
+/home/sensor/src/myzlibtest/zlibtest/diverse/monodevelopment/test/test/obj/x86/Debug/test.csproj.CoreCompileInputs.cache
+/home/sensor/src/myzlibtest/zlibtest/diverse/monodevelopment/test/test/obj/x86/Debug/test.exe
+/home/sensor/src/myzlibtest/zlibtest/diverse/monodevelopment/test/test/obj/x86/Debug/test.pdb

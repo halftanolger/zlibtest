@@ -8,44 +8,59 @@
 
 int main(int argc, char* argv[]) { 
   
-	if (argc != 2) {
-	  	printf("Usage: habitUnZip <file>\n");
-	      	return 1;
-      	}	      
+	if (argc != 3) {
+		printf("\n");
+	  	printf("Usage: habitUnZip <fileIn> <fileOut>\n");
+		printf("\n");
+		printf("Unzipper <fileIn> vha zlib. Den unzippa fila lagres i <fileOut>\n");
+		printf("Programmet kan benyttes til å unippe haBit ElCad swap-filer.\n");
+		printf("\n");
+	    return 1;
+    }	      
 
-	FILE *fptr;
-	fptr = fopen(argv[1],"rb");
+	FILE *fptrIn;
+	fptrIn = fopen(argv[1],"rb");
 
-	if (fptr == 0) {
+	if (fptrIn == 0) {
 		printf("Can't open file: %s\n",argv[1]);
 		return 1;
 	}
 
-	fseek(fptr, 0L, SEEK_END);
-	int sz = ftell(fptr);
-	rewind(fptr);
+	FILE *fptrOut;
+	fptrOut = fopen(argv[2],"wb");
+
+	fseek(fptrIn, 0L, SEEK_END);
+	int sz = ftell(fptrIn);
+	rewind(fptrIn);
 	printf("Size: %d bytes (%s)\n",sz,argv[1]);
 
 	unsigned char *databuff;
 	databuff = (unsigned char*) malloc(sz);
-	fread(databuff,sz,1,fptr);
+	fread(databuff,sz,1,fptrIn);
 
+	int magic = 0;
 
 	// Finn posisjonen til ':'
 	int p = 0;
-        for (int i=0;i<10;i++) {
-      		printf("%d [%u dec|%X hex|%c ascii] \n",
-				i,
-				databuff[i], 
-				databuff[i],
-				databuff[i] );
+	for (int i=0;i<10;i++) {
+		printf("%d [%u dec|%X hex|%c ascii] \n",
+			i,
+			databuff[i], 
+			databuff[i],
+			databuff[i] );
 		if (databuff[i] == ':') {
-			p = i;              	
+			p = i;
+			magic = 1;
 			break;              
 		}	
 	}
+	
+	if (magic == 0) {
+		printf("Error. Dette er neppe ei haBit swap-fil. Mangler nnnn: i starten av fila. nnnn skal angi hvor stor den utpakka fila er.");
+		return 1;
+	}
+	
 	printf("Zipdata starts at position %d\n",p);
-
 
 	unsigned char strbuff[4];
 
@@ -62,14 +77,19 @@ int main(int argc, char* argv[]) {
 		printf("f=%d y=%s x=%d \n",f,strbuff,x);
 	}
 
+	printf("x=%d \n",x);
+	
+	char *byteArray = (char*)malloc(x);
+	
+	if (byteArray == NULL) {
+		printf("Error. Klarte ikke å allocere minne.");
+		return 1;		
+	}
 
-
-	return 0;
-
-
+	//return 0;
 
     // placeholder for the UNcompressed (inflated) version of "b"
-    char c[15000];
+    //char c[15000];
      
 
     // zlib struct
@@ -87,8 +107,9 @@ int main(int argc, char* argv[]) {
     inflate(&infstream, Z_NO_FLUSH);
     inflateEnd(&infstream);
      
-    printf("Uncompressed size is: %lu\n", strlen(c));
-    //printf("Uncompressed string is: %s\n", c);
+	 
+	long usize = strlen(c); 
+    printf("Uncompressed size is: %lu\n",usize);
     
 
     // make sure uncompressed is exactly equal to original.
